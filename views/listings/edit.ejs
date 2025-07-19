@@ -1,0 +1,38 @@
+<% layout("./layouts/boilerplate.ejs") %>
+
+<body>
+    <h1 class="text-3xl m-3">Edit Listing</h1>
+    <form class="m-3"  method="post" action="/listings/<%= listing._id %>?_method=PUT" enctype="multipart/form-data">
+        <label for="name">Name:</label>
+        <input type="text" name="listing[name]" id="name" value="<%= listing.name %>" required class="m-3 p-1 text-black border-2 border-zinc-500 rounded-lg">
+        <br>
+
+        <label for="description">Description:</label>
+        <input type="text" name="listing[description]" id="description" value="<%= listing.description %>" class="m-3 p-1 text-black border-2 border-zinc-500 rounded-lg">
+        <br>
+
+        <div class="m-3">
+            <h6>Original Listing Image</h6>
+            <img src="<%=listing.image.url %>" class="w-1/4 h-1/4 mt-1 rounded-md">
+        </div>
+
+        <label for="image">Image:</label>
+        <input type="file" name="listing[image]" id="image" value="<%= listing.image %>" class="m-3 text-black border-2 border-zinc-500 rounded-lg">
+        <br>
+
+        <label for="price">Price:</label>
+        <input type="number" name="listing[price]" id="price" value="<%= listing.price %>" class="m-3 p-1 text-black border-2 border-zinc-500 rounded-lg">
+        <br>
+
+        <label for="country">Country:</label>
+        <input type="text" name="listing[country]" id="country" value="<%= listing.country %>" class="m-3 p-1 text-black border-2 border-zinc-500 rounded-lg">
+        <br>
+
+        <label for="location">Location:</label>
+        <input type="text" name="listing[location]" id="location" value="<%= listing.location %>" class="m-3 p-1 text-black border-2 border-zinc-500 rounded-lg">
+        <br>
+
+        <button class="`m-3 bg-gray-800 text-white px-4 py-2 hover:bg-zinc-600 rounded-md" type="submit">Edit</button>
+    </form>
+</body>
+

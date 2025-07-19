@@ -1,0 +1,154 @@
+<% layout("./layouts/boilerplate.ejs") %>
+
+<body  class="flex flex-col min-h-screen" ">
+    <div class="flex-grow">
+
+       
+        <section class="hero relative z-40 h-screen text-white rounded-lg mt-20 flex flex-col justify-center items-center overflow-hidden">
+          <div class="absolute inset-0 w-full h-full bg-cover bg-center animate-zoomSlow" style="background-image: url('https://images.unsplash.com/photo-1666307599559-4d3f50527ecb?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); filter: brightness(0.5); z-index: -1;"></div>
+            <h1 class="text-5xl font-bold mb-4 fade-in">
+              <span id="typed-text" class="border-r-2 border-white pr-2 text-white font-bold drop-shadow-[2px_2px_2px_rgba(0,0,0,0.7)]"></span>
+            </h1>
+            <p class="text-white font-semibold border-r-2 mb-8 fade-in">Explore our curated collection of premium accommodations </p>
+            <a href="/listings" class="bg-white text-gray-800 py-2 px-4 rounded-lg hover:bg-gray-100 transition duration-300 fade-in hover:border-2 hover:border-white">Explore Listings</a>
+        </section>
+    
+        <section class="featured-destinations py-16">
+            <h2 class="text-3xl text-center font-bold mb-8">Top Rated Listings</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-4">
+                <% topListings.forEach(listing => { 
+                     let totalRating = 0;
+                     listing.reviews.forEach(r => totalRating += r.rating || 0);
+                     const avgRating = listing.reviews.length ? (totalRating / listing.reviews.length).toFixed(1) : "No rating";
+                %>
+                  <div class="destination bg-white p-4 rounded-lg shadow-md hover:shadow-xl transition duration-300">
+                    <a href="/listings/<%= listing._id %>">
+                      <img src="<%= listing.image.url %>" alt="<%= listing.name %>" class="rounded-t-lg h-60 w-full object-cover">
+                    </a>
+                    <h3 class="text-xl font-semibold mt-4"><%= listing.name %></h3>
+                    <p class="text-gray-600">Rating: <%= avgRating %></p>
+                  </div>
+                <% }) %>
+            </div>
+        </section>
+
+        <section class="unique-stays py-16 bg-gray-100 rounded-md">
+            <h2 class="text-3xl text-center font-bold mb-8">Unique Stays for Every Occasion</h2>
+            <div class="carousel flex overflow-x-auto px-4 justify-around space-x-4">
+                <% randomListings.forEach(listing => { %>
+                  <div class="stay bg-white p-4 rounded-lg shadow-md hover:shadow-xl transition duration-300 w-64">
+                    <a href="/listings/<%= listing._id %>">
+                      <img src="<%= listing.image.url %>" alt="<%= listing.name %>" class="rounded-t-lg h-40 w-full object-cover">
+                    </a>
+                    <h3 class="text-xl font-semibold mt-4"><%= listing.name %></h3>
+                  </div>
+                <% }) %>
+            </div>
+        </section>
+
+        <section class="become-host py-20 bg-gradient-to-r from-blue-50 to-purple-100">
+          <div class="container mx-auto px-4 flex flex-col lg:flex-row items-center space-y-8 lg:space-y-0 lg:space-x-12">
+            <img src="https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?q=80&w=2835&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Happy Host" class="w-full lg:w-1/2 rounded-xl shadow-xl hover:scale-105 transition-transform duration-300">
+            
+            <div class="lg:w-1/2 text-center lg:text-left">
+              <h2 class="text-4xl font-bold text-gray-800 mb-4">Become a Host</h2>
+              <p class="text-lg text-gray-600 mb-6 leading-relaxed">Share your space and start earning today. Join a community of hosts offering unique stays and unforgettable experiences around the world.</p>
+              <a href="/host" class="inline-block bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold px-6 py-3 rounded-lg shadow-md transition duration-300">
+                Get Started
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section class="testimonials py-16 bg-gray-100">
+            <h2 class="text-3xl text-center font-bold mb-8">Hear From Our Guests</h2>
+            <div class="carousel flex overflow-x-auto px-4 space-x-4">
+                <% guestReviews.forEach(review => { %>
+                  <div class="testimonial bg-white p-4 rounded-lg shadow-md hover:shadow-xl transition duration-300 w-64 m-2">
+                    <p class="text-gray-600 mb-4">"<%= review.comment %>"</p>
+                    <div class="flex items-center justify-between">
+                      <div class="justify-center mx-auto items-center gap-2">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=<%= review.author?.username || 'guest' %>" alt="Avatar" class="w-10 h-10 rounded-full">
+                        <span class="font-semibold">@<%= review.author?.username || 'Guest' %></span>
+                      </div>
+                      <span class="text-yellow-500">
+                        <% for (let i = 1; i <= 5; i++) { %>
+                          <i class="fas fa-star <%= i <= review.rating ? '' : 'text-gray-300' %>"></i>
+                        <% } %>
+                      </span>
+                    </div>
+                  </div>
+                <% }) %>
+            </div>
+        </section>
+    
+
+        <section class="explore-experiences py-16">
+          <h2 class="text-3xl text-center font-bold mb-8">Explore Experiences</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4">
+            <% experiences.forEach(experience => { %>
+              <div class="experience bg-white p-4 rounded-lg shadow-md hover:shadow-xl transition duration-300">
+                <img src="<%= experience.image %>" alt="<%= experience.title %>" class="rounded-lg h-64 w-full object-cover">                <h3 class="text-xl font-semibold mt-4"><%= experience.title %></h3>
+                <p class="text-gray-600"><%= experience.description %></p>
+              </div>
+            <% }) %>
+          </div>
+        </section>
+
+        <section class="newsletter py-16 bg-gray-100">
+            <h2 class="text-3xl text-center font-bold mb-4">Stay in the Know</h2>
+            <p class="text-center text-gray-600 mb-8">Subscribe to our newsletter for travel tips, offers, and inspiration.</p>
+            <form class="flex justify-center">
+                <input type="email" placeholder="Your Email" class="p-2 rounded-l-md">
+                <button class="bg-blue-500 text-white p-2 rounded-r-md">Subscribe</button>
+            </form>
+        </section>
+        
+    </div>
+<script>
+  const phrases = [
+    "Find Your Perfect Stay",
+    "Unforgettable Getaways Await",
+    "Discover Unique Homes Around the World"
+  ];
+
+  let index = 0;
+  let charIndex = 0;
+  const typedText = document.getElementById("typed-text");
+
+  function typePhrase() {
+    if (charIndex <= phrases[index].length) {
+      typedText.innerText = phrases[index].substring(0, charIndex++);
+      setTimeout(typePhrase, 100);
+    } else {
+      setTimeout(erasePhrase, 2000);
+    }
+  }
+
+  function erasePhrase() {
+    if (charIndex >= 0) {
+      typedText.innerText = phrases[index].substring(0, charIndex--);
+      setTimeout(erasePhrase, 50);
+    } else {
+      index = (index + 1) % phrases.length;
+      setTimeout(typePhrase, 500);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", typePhrase);
+</script>
+<style>
+  @keyframes zoomSlow {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(1.2);
+    }
+  }
+
+  .animate-zoomSlow {
+    animation: zoomSlow 10s ease-in-out infinite alternate;
+  }
+</style>
+</body>

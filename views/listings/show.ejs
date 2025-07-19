@@ -1,0 +1,388 @@
+<% layout("./layouts/boilerplate.ejs") %>
+
+
+  <body>
+    <section class="property-detail">
+      <div class="container">
+        <h1 class="page-title">Property Details</h1>
+
+        <div class="listing-card">
+          <div class="listing-grid">
+            <!-- Image Section -->
+            <div class="image-section">
+              <div class="image-container">
+                <img src="<%= listing.image?.url || '/placeholder.svg' %>" alt="<%= listing.name %>"
+                  class="property-image">
+                <div class="image">
+                </div>
+
+                <!-- Rating Badge -->
+                <div class="rating-badge">
+                  <i class="fas fa-star"></i>
+                  <% let total=0; listing.reviews.forEach(r=> total += r.rating || 0); %>
+                    <span>
+                      <%= listing.reviews.length ? (total / listing.reviews.length).toFixed(1) : "No rating" %>
+                    </span>
+                </div>
+
+                <!-- Owner Badge -->
+                <div class="owner-badge">
+                  <div class="owner-avatar">
+                    <i class="fas fa-user"></i>
+                  </div>
+                  <span>
+                    <%= listing.owner?.username || "Host" %>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Content Section -->
+            <div class="content-section">
+              <div class="content-wrapper">
+                <h1 class="property-title">
+                  <%= listing.name %>
+                </h1>
+
+                <!-- Features Tags -->
+                <div class="features-container">
+                  <% if (listing.amenities && listing.amenities.length> 0) { %>
+                    <% listing.amenities.forEach(feature=> { %>
+                      <span class="feature-tag">
+                        <i class="fas fa-check-circle"></i>
+                        <%= feature %>
+                      </span>
+                      <% }) %>
+                        <% } else { %>
+                          <span class="feature-tag text-gray-400">No features listed</span>
+                          <% } %>
+                </div>
+
+                <!-- Description -->
+                <p class="property-description">
+                  <%= listing.description %>
+                </p>
+
+                <!-- House Rules -->
+                <div class="info-section">
+                  <h3 class="section-title">House Rules</h3>
+                  <p class="section-content">
+                    <%= listing.rules || 'No specific rules provided.' %>
+                  </p>
+                </div>
+
+
+
+                <!-- Property Info Grid -->
+                <div class="info-grid">
+                  <div class="info-item">
+                    <div class="info-icon">
+                      <i class="fas fa-rupee-sign"></i>
+                    </div>
+                    <div class="info-content">
+                      <span class="info-label">Price per night</span>
+                      <span class="info-value price">₹<%= listing.price || 'N/A' %></span>
+                    </div>
+                  </div>
+
+                  <div class="info-item">
+                    <div class="info-icon">
+                      <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="info-content">
+                      <span class="info-label">Location</span>
+                      <span class="info-value">
+                        <%= listing.location || 'N/A' %>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="info-item">
+                    <div class="info-icon">
+                      <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="info-content">
+                      <span class="info-label">Country</span>
+                      <span class="info-value">
+                        <%= listing.country || 'N/A' %>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="info-item">
+                    <div class="info-icon">
+                      <i class="fas fa-home"></i>
+                    </div>
+                    <div class="info-content">
+                      <span class="info-label">Property Type</span>
+                      <span class="info-value">
+                        <%= listing.type || 'N/A' %>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="info-item">
+                    <div class="info-icon">
+                      <i class="fas fa-users"></i>
+                    </div>
+                    <div class="info-content">
+                      <span class="info-label">Guests</span>
+                      <span class="info-value">
+                        <%= listing.guests || 'N/A' %> Guests
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="info-item">
+                    <div class="info-icon">
+                      <i class="fas fa-bed"></i>
+                    </div>
+                    <div class="info-content">
+                      <span class="info-label">Bedrooms</span>
+                      <span class="info-value">
+                        <%= listing.bedrooms || 'N/A' %> Bedrooms
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="info-item">
+                    <div class="info-icon">
+                      <i class="fas fa-bath"></i>
+                    </div>
+                    <div class="info-content">
+                      <span class="info-label">Bathrooms</span>
+                      <span class="info-value">
+                        <%= listing.bathrooms || 'N/A' %> Bathrooms
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="info-item">
+                    <div class="info-icon">
+                      <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="info-content">
+                      <span class="info-label">Check-in</span>
+                      <span class="info-value">
+                        <%= listing.checkin || 'N/A' %>
+                      </span>
+                    </div>
+                    <div class="info-content">
+                      <span class="info-label">Check-out</span>
+                      <span class="info-value">
+                        <%= listing.checkout || 'N/A' %>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                  <button class="btn-primary">
+                    <i class="fas fa-calendar-check"></i>
+                    Book Now
+                  </button>
+                  <button class="btn-secondary">
+                    <i class="fas fa-heart"></i>
+                    Save to Wishlist
+                  </button>
+                </div>
+
+                <!-- Instant Booking Info -->
+                <div class="instant-booking">
+                  <div class="instant-booking-icon">
+                    <i class="fas fa-bolt"></i>
+                  </div>
+                  <div class="instant-booking-content">
+                    <h4>Instant Booking Available</h4>
+                    <p>Book immediately without waiting for host approval</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <%if(curruser && curruser._id){ %>
+      <div class="btn flex gap-2 m-5">
+        <a class="bg-zinc-700 text-white px-4 py-2 rounded-md hover:bg-zinc-600"
+          href="/listings/<%= listing._id %>/edit">edit</a>
+
+        <form method="post" action="/listings/<%= listing._id %>?_method=DELETE">
+          <button class="bg-zinc-700 text-white px-4 py-2 rounded-md hover:bg-zinc-600">Delete</button>
+        </form>
+      </div>
+      <% } %>
+
+        <div class="my-6 px-4 w-full rounded-lg max-w-full">
+          <h5 class="text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">You will see your map here</h5>
+          <div id="map" class="h-[400px] w-full rounded-xl"></div>
+          <p id="map-fallback" style="display:none;color:red;">Map failed to load. Please check your internet connection
+            or Mapbox token.</p>
+        </div>
+        <div class="map-overlay my-6 px-4">
+          <div class="map-overlay-inner">
+            <div class="control-header">
+              <h2 class="control-title">
+                <i class="fas fa-map"></i>
+                Map Controls
+              </h2>
+              <p class="control-subtitle">Customize your map experience</p>
+            </div>
+
+            <fieldset class="select-fieldset">
+              <label class="fieldset-label" for="lightPreset">
+                <i class="fas fa-sun"></i>
+                Light Preset
+              </label>
+              <div class="custom-select">
+                <select id="lightPreset" name="lightPreset" class="w-full max-w-xs">
+                  <option value="dawn">Dawn <span class="preset-indicator preset-dawn"></span></option>
+                  <option value="day" selected>Day</option>
+                  <option value="dusk">Dusk</option>
+                  <option value="night">Night</option>
+                </select>
+              </div>
+            </fieldset>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full m-auto">
+              <label class="checkbox-item flex items-center gap-2" for="showPlaceLabels">
+                <div class="custom-checkbox">
+                  <input type="checkbox" id="showPlaceLabels" checked>
+                  <span class="checkmark"></span>
+                </div>
+                <span class="checkbox-label flex items-center gap-1">
+                  <i class="fas fa-map-marker-alt"></i> Show place labels
+                </span>
+              </label>
+
+              <label class="checkbox-item flex items-center gap-2" for="showPointOfInterestLabels">
+                <div class="custom-checkbox">
+                  <input type="checkbox" id="showPointOfInterestLabels" checked>
+                  <span class="checkmark"></span>
+                </div>
+                <span class="checkbox-label flex items-center gap-1">
+                  <i class="fas fa-star"></i> Show POI labels
+                </span>
+              </label>
+
+              <label class="checkbox-item flex items-center gap-2" for="showRoadLabels">
+                <div class="custom-checkbox">
+                  <input type="checkbox" id="showRoadLabels" checked>
+                  <span class="checkmark"></span>
+                </div>
+                <span class="checkbox-label flex items-center gap-1">
+                  <i class="fas fa-road"></i> Show road labels
+                </span>
+              </label>
+
+
+
+              <label class="checkbox-item flex items-center gap-2" for="showTransitLabels">
+                <div class="custom-checkbox">
+                  <input type="checkbox" id="showTransitLabels" checked>
+                  <span class="checkmark"></span>
+                </div>
+                <span class="checkbox-label flex items-center gap-1">
+                  <i class="fas fa-bus"></i> Show transit labels
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+        <% if (curruser) { %>
+          <div class="review mx-auto px-4 py-8 border-1 border-t-zinc-500 max-w-full">
+
+            <h1 class="text-3xl mb-5">Leave a review</h1>
+            <form method="post" action="/listings/<%= listing._id %>/reviews" class="w-full max-w-2xl">
+
+
+              <div class="flex flex-wrap items-center gap-4 mb-4">
+                <label class="text-lg mr-2 items-center" for="rating">Rating :</label>
+                <fieldset class="starability-slot">
+                  <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value=""
+                    aria-label="No rating." />
+                  <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                  <label for="first-rate1" title="Terrible">1 star</label>
+                  <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                  <label for="first-rate2" title="Not good">2 stars</label>
+                  <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                  <label for="first-rate3" title="Average">3 stars</label>
+                  <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                  <label for="first-rate4" title="Very good">4 stars</label>
+                  <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                  <label for="first-rate5" title="Amazing">5 stars</label>
+                </fieldset>
+              </div>
+              <div class="grid mb-4">
+                <label class="text-2xl m-2" for="comment">Comment:</label>
+                <textarea required class="p-4 text-black rounded-lg resize-none w-full max-w-full"
+                  name="review[comment]" id="comment"></textarea>
+              </div>
+              <div>
+                <button class="m-3 bg-gray-800 text-white p-2 rounded-md hover:bg-zinc-600 w-full max-w-xs"
+                  type="submit">Submit</button>
+              </div>
+            </form>
+          </div>
+          <% } %>
+            <div class="reviews border-t border-zinc-500 max-w-full mt-10 px-4">
+              <h1 class="text-xl m-2">All Reviews</h1>
+              <ul>
+                <% listing.reviews.forEach(review=> { %>
+                  <li
+                    class="bg-zinc-200 p-3 mb-6 rounded flex flex-col md:flex-row gap-4 border-y border-zinc-500 justify-between">
+                    <div class="flex flex-col md:flex-row gap-4 items-start md:items-center">
+                      <img class="h-8 w-8 rounded-full"
+                        src="https://api.dicebear.com/7.x/avataaars/svg?seed=<%= review.comment %>" />
+                      <div class="flex justify-between items-center gap-2 p-2 flex-wrap">
+                        <h2 class="text-bold mr-2">
+                          <%= review.comment %>
+                        </h2>
+                        <p class="starability-result" data-rating="<%= review.rating || 0 %>"></p>
+                        <% if (review.author && review.author.username) { %>
+                          <p class="text-sm text-gray-400">-@<%= review.author.username %>
+                          </p>
+                          <% } %>
+                            <p class="text-sm text-gray-400 ml-5"
+                              title="<%= moment(review.createdAt).format('LLLL') %>">
+                              ----<%= moment(review.createdAt).fromNow() %>
+                            </p>
+                      </div>
+                    </div>
+                    <% if (curruser && review.author && curruser._id.toString()===review.author._id.toString()) { %>
+                      <form method="post" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
+                        class="mt-2 md:mt-0">
+                        <button
+                          class="bg-zinc-500 text-white px-4 py-2 rounded-md hover:bg-zinc-600 w-full max-w-xs">Delete</button>
+                      </form>
+
+                      <% } %>
+                  </li>
+                  <% }) %>
+              </ul>
+            </div>
+            </div>
+
+
+
+
+
+            <script>
+              const maptoken = "<%= mapToken %>";
+               const coordinates = <%- JSON.stringify(listing.geometry?.coordinates || [77.209, 28.6139]) %>;
+
+            </script>
+
+            <script src="/js/map.js"></script>
+            <script src="/js/map.js"></script>
+  </body>

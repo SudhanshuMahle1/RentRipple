@@ -1,0 +1,58 @@
+<header class="z-50 text-gray-600 body-font border-2 border-b-gray-400 rounded-md sticky top-0 bg-zinc-200 mb-4 shadow ">
+  <div class="py-2 px-3 mx-auto w-full flex flex-wrap md:flex-nowrap items-center justify-between">
+    <!-- Logo Centered -->
+    <div class="flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" viewBox="0 0 512 512">
+        <path
+          d="M0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 32a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm-96-32a96 96 0 1 0 192 0 96 96 0 1 0 -192 0zM96 240c0-35 17.5-71.1 45.2-98.8S205 96 240 96c8.8 0 16-7.2 16-16s-7.2-16-16-16c-45.4 0-89.2 22.3-121.5 54.5S64 194.6 64 240c0 8.8 7.2 16 16 16s16-7.2 16-16z" />
+      </svg>
+      <span class="text-lg font-semibold">RentRipple</span>
+    </div>
+
+    <!-- Toggle Button for mobile -->
+    <button id="menu-toggle" class="md:hidden text-gray-700 focus:outline-none absolute right-4 top-4">
+      <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Nav Links -->
+  <div id="menu" class="hidden flex flex-col gap-2 md:flex md:flex-row md:items-center w-full md:w-auto px-3 pb-3 md:pb-0 ml-5">
+    <div class="flex flex-col md:flex-row md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400 text-base justify-start items-start md:items-center">
+      <a class="mr-5 hover:text-gray-900" href="/">Home</a>
+      <a class="mr-5 hover:text-gray-900" href="/listings">All Listings</a>
+      <a class="mr-5 hover:text-gray-900" href="/listings/new">Add New Listing</a>
+    </div>
+    <div class="flex flex-col md:flex-col md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400 text-base justify-start items-start md:items-start">
+      <nav>
+        <% if (!curruser) { %>
+          <a class="mr-5 hover:text-gray-900" href="/users/login">Login</a>
+          <a class="mr-5 hover:text-gray-900" href="/users/signup">Signup</a>
+        <% } else { %>
+          <a class="mr-5 hover:text-gray-900" href="/logout">Logout</a>
+        <% } %>
+      </nav>
+    </div>
+  </div>
+
+  <script>
+    const toggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('menu');
+    toggle.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+      menu.classList.toggle('flex');
+    });
+
+    // Optional: Hide menu on link click (mobile)
+    document.querySelectorAll('#menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth < 768) {
+          menu.classList.add('hidden');
+          menu.classList.remove('flex');
+        }
+      });
+    });
+  </script>
+</header>
