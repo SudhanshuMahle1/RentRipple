@@ -1,16 +1,24 @@
 // Ensure coordinates are defined from EJS before using this script
+
 if (typeof coordinates === 'undefined') {
     console.error("Mapbox Error: coordinates is not defined.");
 } else {
-    mapboxgl.accessToken = 'pk.eyJ1IjoibWFoaXIyOCIsImEiOiJjbHo1dHl4YTkzdTJ4MmtxczNiMnh5ZmRwIn0.vw2lN4zHIjvMiUQuM5iOqA';
+    // Use dynamic maptoken from EJS
+    mapboxgl.accessToken = typeof maptoken !== 'undefined' ? maptoken : '';
     const map = new mapboxgl.Map({
         container: 'map', // container ID
         center: coordinates, // starting position [lng, lat]
         zoom: 15.1, // starting zoom
         pitch: 62, // starting pitch
         bearing: -20, // starting bearing
-        style: 'mapbox://styles/mapbox/standard' // style URL
+        style: 'mapbox://styles/mapbox/streets-v11' // reliable style URL
     });
+
+    // Add marker for the listing location
+    new mapboxgl.Marker({ color: 'red' })
+        .setLngLat(coordinates)
+        .setPopup(new mapboxgl.Popup().setText("Property Location"))
+        .addTo(map);
 
     map.on('style.load', () => {
         map.addSource('line', {
