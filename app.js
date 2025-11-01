@@ -28,20 +28,25 @@ const geocodingClient = mbxGeoCoding({ accessToken: mapToken })
 const moment = require('moment');
 
 
-const port = process.env.PORT || 3000;
+const port = 3000;
 
 
 const { cloudinary, storage } = require('./cloudConfig.js');
 const { access } = require('fs');
 const upload = multer({ storage });
 
-const MONGO_URL = process.env.MONGO_URL || "mongodb://127.0.0.1:27017/AirBnb";
+const MONGO_URL = process.env.MONGO_URL;
 
 
 // Connect to MongoDB
-mongoose.connect(MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log("MongoDB connected"))
-    .catch((err) => console.error("Connection error:", err));
+mongoose.connect(MONGO_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  serverSelectionTimeoutMS: 10000, // 15s
+})
+  .then(() => console.log("✅ MongoDB connected successfully"))
+  .catch((err) => console.error("❌ MongoDB connection error:", err));
+
 
 // Set up view engine
 app.set('view engine', 'ejs');
