@@ -2,6 +2,11 @@
 
 A full-stack rental platform inspired by Airbnb that allows users to explore, list, review, and book accommodations globally. Built with responsiveness, interactivity, and scalability in mind.
 
+# RentRipple
+
+🚀 **Live Demo:** [https://rentripple.onrender.com](https://rentripple.onrender.com)
+
+RentRipple is a modern rental platform that allows users to explore, list, and manage properties efficiently.
 
 ---
 
